@@ -1,47 +1,60 @@
-PDS4 Dimension Extractor
-A lightweight Bash utility designed to recursively scan directories for Chandrayaan-2 (PDS4) XML labels and extract image dimensions (Lines and Samples) using XPath.
+PDS4 Dimension Extractor (pds-dims)
+A high-performance Bash utility designed to recursively scan directories for ISRO Chandrayaan-2 (PDS4) XML labels and extract critical image dimensions (Lines and Samples).
 
-Features
-Recursive Search: Automatically finds all .xml files in the target folder and all subfolders.
+🚀 Features
+Recursive Scan: Automatically traverses folders and subfolders to find every .xml file.
 
-Namespace Aware: Correctly handles pds: and isda: XML namespaces.
+Dependency-Free: Built using raw shell commands (grep, sed)—no external XML libraries or Python required.
 
-Robust Parsing: Uses xmllint and XPath instead of fragile text-matching (like grep).
+Namespace-Aware Logic: Specifically designed to navigate the structure of PDS4 observational products used by ISRO.
 
-Clean Output: Generates a tab-separated table for easy viewing or redirection to a file.
+Tabulated Output: Generates a clean, readable table ideal for terminal viewing or piping into a .csv for Excel.
 
-Prerequisites
-This script requires xmllint, which is part of the libxml2-utils package on Ubuntu.
+📋 Prerequisites
+The script uses standard Unix utilities available on all Ubuntu/Linux distributions:
 
-Bash
-sudo apt-get update
-sudo apt-get install libxml2-utils
-Installation
-To install this script as a system-wide command:
+bash
 
-Make the script executable:
+grep
 
-Bash
-chmod +x pds-dims
-Move to your local bin directory:
+sed
 
-Bash
-mkdir -p ~/.local/bin
-mv pds-dims ~/.local/bin/
-Refresh your shell:
+find
+
+⚙️ Installation
+You can install this as a standalone program on your local Ubuntu machine using our automated installer.
+
+1. Download and Install
+Run the following command to download the installer and set up the program in your local path:
 
 Bash
-source ~/.profile
-Usage
-You can run the program from any directory.
-
-Basic Command
-Provide the path to the folder containing your XML files:
+curl -sSL https://raw.githubusercontent.com/Ramanean/Moon/main/scripts/ISRO/install-pds-dims.sh | bash
+2. Activate
+After installation, refresh your shell to recognize the new command:
 
 Bash
-pds-dims /path/to/data
-Exporting to CSV
-If you want to save the results to a file for use in Excel:
+source ~/.bashrc
+📖 Usage
+Once installed, you can run the program from any directory by typing pds-dims.
 
+Scan Current Directory
 Bash
-pds-dims . > metadata_report.csv
+pds-dims .
+Scan a Specific Data Folder
+Bash
+pds-dims /path/to/isro/data
+Export Results to CSV
+Bash
+pds-dims /path/to/data > dimensions_report.csv
+🛠️ How it Works
+The script targets the Axis_Array components of the PDS4 XML schema. It identifies the specific axis (Line or Sample) and extracts the numeric value from the associated <elements> tag using a contextual search logic:
+
+Targeting Lines: Searches for the value immediately following <axis_name>Line</axis_name>.
+
+Targeting Samples: Searches for the value immediately following <axis_name>Sample</axis_name>.
+
+🤝 Contributing
+Feel free to fork this repository and submit pull requests for any improvements, such as adding support for metadata like start_date_time or spacecraft_altitude.
+
+📄 License
+This project is open-source and available under the MIT License.
