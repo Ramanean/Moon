@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # --- Configuration ---
-PROG_NAME="ch2-coords"
+PROG_NAME="ch2-getlatlon"
 INSTALL_DIR="$HOME/.local/bin"
 BASH_CONFIG="$HOME/.bashrc"
 
