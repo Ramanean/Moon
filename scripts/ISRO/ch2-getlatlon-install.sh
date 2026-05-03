@@ -28,7 +28,7 @@ extract_tag() {
     local tag=$1
     local xml_content=$2
     # Matches <isda:tag...>VALUE</isda:tag>
-    echo "$xml_content" | grep "<isda:$tag" | sed "s/.*<isda:$tag[^>]*>\(.*\)<\/isda:$tag>.*/\1/" | tr -d '[:space:]'
+    echo "$xml_content" | grep "<isda:$tag" | head -n 1 | sed "s/.*<isda:$tag[^>]*>\(.*\)<\/isda:$tag>.*/\1/" | tr -d '[:space:]'
 }
 
 process_xml() {
